@@ -19,7 +19,7 @@
 			<header id="header">
 				<div class="inner">
 					<a href="#" class="image avatar"><img src="images/profiles_small.jpg" alt="" /></a>
-					<h1><strong>Junsheng Fu</strong> </h1>
+					<h1><strong>Precious Ugo Abara</strong> </h1>
 
 				<ul class="listItem">
 					<li><a href="cv/CV_junsheng_fu.pdf" class="">Resume</a></li>
@@ -44,128 +44,77 @@
 <i>Hobbies</i>: Piano, Karate, Photography, Swimming, Floorball, Ping Pong
 </h4>
 						</header>
-<!--
-						<p><h4> </h4></p> 
-						<ul class="actions">
-							<li><a href="https://drive.google.com/open?id=0B5WIzrIVeL0WY3ZyQVk0TEpfMnM" class="button">Resume</a></li>
-							<li><a href="https://github.com/JunshengFu" class="button">GitHub</a></li>
-							<li><a href="https://fi.linkedin.com/in/junshengfu" class="button">LinkedIn</a></li>
-							<li><a href="http://patents.justia.com/inventor/junsheng-fu" class="button">Patents</a></li>
-							<li><a href="http://patents.justia.com/inventor/junsheng-fu" class="button">Patents</a></li>
-						</ul>
--->
 					</section>
 
 				<!-- Two -->
 					<section id="two">
 						<h2>Recent Projects</h2>
 						<div class="row">
-
-							<article class="6u 12u$(xsmall) work-item">
-								<a href="images/fulls/01.jpg" class="image fit thumb"><img src="images/thumbs/01.jpg" /></a>
-								<a href="https://junshengfu.github.io/vehicle-detection/" >Vehicle Detection</a>
-								<p><h5>Created vehicle detection pipeline with two approaches, deep neural networks (YOLO+TensorFlow) and support vector machines (HOG+OpenCV). Optimized and evaluated the model on video data from both highway and city driving.</h5></p>
-							</article>
-
-
-							<article class="6u$ 12u$(xsmall) work-item">
-								<a href="images/fulls/mpc.png" class="image fit thumb"><img src="images/thumbs/mpc.png" alt="" /></a>
-								<a href="https://junshengfu.github.io/Model-Predictive-Control/">Autonomous driving with Model Predictive control</a>
-								<p><h5> This project uses a Model Predictive Control (MPC) to drive a car in a game simulator. The server provides reference waypoints (yellow line in the demo video) via websocket, and we use MPC to simulate the vehicle trajactory (green line), compute steering and throttle commands to drive the car. The solution must be robust to 100ms latency, since it might encounter in real-world application.</h5></p>
-							</article>
-
-
+							
 							<article class="6u 12u$(xsmall) work-item">
 								<a href="images/fulls/particle_filter.jpg" class="image fit thumb"><img src="images/thumbs/particle_filter.jpg" alt="" /></a>
-								<a href="https://junshengfu.github.io/kidnapped-vehicle/">Vehicle Localization with a Particle Filter</a>
+								<a href="https://github.com/48cfu/CarND-Kidnapped-Vehicle-Project">Vehicle Localization with a Particle Filter</a>
 								<p><h5> Vechile is transported to an unkonw place, then a real-time particle filter is used for estimating the vechicle's position and orientation with given a map, an initial noisy GPS, and each timestep's noisy observation data.</h5></p>
 							</article>
-
-
-							<article class="6u$ 12u$(xsmall) work-item">
-								<a href="images/fulls/02.jpg" class="image fit thumb"><img src="images/thumbs/02.jpg" alt="" /></a>
-								<a href="https://junshengfu.github.io/driving-lane-departure-warning/" >Lane Depature Warning</a>
-								<p><h5>Designed and implemented a lane-finding algorithm and a lane-departure-warning system. Identified lane curvature and overcame environmental challenges, e.g. shadows, pavement changes.</h5></p>
-							</article>
-
-
+						
 							<article class="6u 12u$(xsmall) work-item">
 								<a href="images/fulls/03.jpg" class="image fit thumb"><img src="images/thumbs/03.jpg" alt="" /></a>
-								<a href="https://junshengfu.github.io/driving-behavioral-cloning/" >Driving behavioral cloning</a>
+								<a href="https://github.com/48cfu/CarND-Behavioral-Cloning-P3" >Driving behavioral cloning</a>
 								<p><h5>Built and trained a CNN to autonomously steer a car in a game simulator, using TensorFlow and Keras. Used optimization techniques such as regularization and dropout to generalize the network for driving on unseen tracks.</h5></p>
 							</article>
 
 
 							<article class="6u$ 12u$(xsmall) work-item">
 								<a href="images/fulls/ekf.png" class="image fit thumb"><img src="images/thumbs/ekf.png" alt="" /></a>
-								<a href="https://junshengfu.github.io/tracking-with-Extended-Kalman-Filter/" >Object tracking with Sensor Fusion-based Extended Kalman Filter</a>
+								<a href="https://github.com/48cfu/CarND-Extended-Kalman-Filter-Project" >Object tracking with Sensor Fusion-based Extended Kalman Filter</a>
 								<p><h5>Utilize sensor data from both LIDAR and RADAR measurements for object (e.g. pedestrian, vehicles, or other moving objects) tracking with the Extended Kalman Filter.</h5></p>
 							</article>
 
-
+<!--
 							<article class="6u 12u$(xsmall) work-item">
 								<a href="images/fulls/ukf.jpg" class="image fit thumb"><img src="images/thumbs/ukf.jpg" alt="" /></a>
 								<a href="https://junshengfu.github.io/tracking-with-Unscented-Kalman-Filter/" >Object Tracking with Sensor Fusion-based Unscented Kalman Filter</a>
 								<p><h5>Utilize sensor data from both LIDAR and RADAR measurements for object (e.g. pedestrian, vehicles, or other moving objects) tracking with the Unscented Kalman Filter.
-
-</h5></p>
 							</article>
+-->
+</h5></p>
+							
 
 
 							<article class="6u$ 12u$(xsmall) work-item">
 								<a href="images/fulls/04.jpg" class="image fit thumb"><img src="images/thumbs/04.jpg" alt="" /></a>
-								<a href="https://junshengfu.github.io/DrivingLaneDetection/" >Find Lane Lines on the road</a>
+								<a href="https://github.com/48cfu/CarND-Advanced-Lane-Lines" >Find Lane Lines on the road</a>
 								<p><h5>Detected highway lane lines on a video stream. Used OpencV image analysis techniques to identify lines, including Hough Transforms and Canny edge detection.</h5></p>
 							</article>
 
 
 							<article class="6u 12u$(xsmall) work-item">
 								<a href="images/fulls/06.jpg" class="image fit thumb"><img src="images/thumbs/06.jpg" alt="" /></a>
-								<a href="https://junshengfu.github.io/traffic-sign-recognition/" >Traffic Sign Recognition</a>
+								<a href="https://github.com/48cfu/CarND-Traffic-Sign-Classifier-Project" >Traffic Sign Recognition</a>
 								<p><h5>Built and trained a deep neural network to classify traffic signs, using TensorFlow. Experimented with different network architectures. Performed image pre-processing and validation to guard against overfitting.</h5></p>
 							</article>
 
 
-							<article class="6u$ 12u$(xsmall) work-item">
-								<a href="images/fulls/segmentation.png" class="image fit thumb"><img src="images/thumbs/segmentation.png" alt="" /></a>
-								<a href="https://junshengfu.github.io/semantic_segmentation/" >Road Segmentation</a>
-								<p><h5>In the case of the autonomous driving, given an front camera view, the car needs to know where is the road. In this project, we trained a neural network to label the pixels of a road in images, by using a method named Fully Convolutional Network (FCN). In this project, FCN-VGG16 is implemented and trained with KITTI dataset for road segmentation.</h5></p>
-							</article>
-
-
-
 							<article class="6u 12u$(xsmall) work-item">
 								<a href="images/fulls/pid.jpg" class="image fit thumb"><img src="images/thumbs/pid.jpg" alt="" /></a>
-								<a href="https://junshengfu.github.io/PID-controller/" >Autonomous driving with PID controller</a>
+								<a href="https://github.com/48cfu/CarND-PID-Control-Project" >Autonomous driving with PID controller</a>
 								<p><h5>This project is to use PID controllers to control the steering angle and the throttle for driving a car in a game simulator. The simulator provides cross-track error (CTE) via websocket. The PID (proportional-integral-differential) controllers give steering and throttle commands to drive the car reliably around the simulator track.</h5></p>
 							</article>
 
 
 							<article class="6u$ 12u$(xsmall) work-item">
 								<a href="images/fulls/planner.png" class="image fit thumb"><img src="images/thumbs/planner.png" alt="" /></a>
-								<a href="https://junshengfu.github.io/path_planning/" >Path Planner</a>
+								<a href="https://github.com/48cfu/CarND-Path-Planning-Project" >Path Planner</a>
 								<p><h5>Implement a simple real-time path planner in C++ to navigate a car around a simulated highway scenario, including other traffic, given waypoint, and sensor fusion data. The planned path should be safe and smooth, so that tha car avoids collisions with other vehicles, keeps within a lane (aside from short periods of time while changing lanes), and drive according to the speed limits. </h5></p>
 							</article>
-
-
-							<article class="6u 12u$(xsmall) work-item">
-								<a href="images/fulls/icip.png" class="image fit thumb"><img src="images/thumbs/icip.png" alt="" /></a>
-								<a href="videos/3D_photo_Album/3DPhotoAlbum.mp4" >A 3D map augmented photo gallery application on moible device</a>
-								<p><h5>We proposes a 3D map augmented photo gallery mobile application that allows user to virtually transit from 2Dimage space to the 3D map space, to expand the field of viewto surrounding environments that are not visible in the original image, and to change viewing angles among different global registered images during the image browsing.</h5></p>
-							</article>
-
+<!--
 							<article class="6u$ 12u$(xsmall) work-item">
 								<a href="images/fulls/05.jpg" class="image fit thumb"><img src="images/thumbs/05.jpg" alt="" /></a>
 								<a href="https://junshengfu.github.io/camera-pose-estimation/" >Camera Pose Estimation</a>
 								<p><h5>Given a map contians street-view image and lidar, estimate the 6 DoF camera pose of a query image. Input of the system: query image, reference image and lidar point cloud, where reference image and lidar are known in a global coordinate system. Output of the system: 6 DoF camera pose of the query image in the global coordinate system.</h5></p>
 							</article>
 
-							<article class="6u 12u$(xsmall) work-item">
-								<a href="images/fulls/playback.jpg" class="image fit thumb"><img src="images/thumbs/playback.jpg" alt="" /></a>
-								<a href="videos/video_playback/videoPlayBack.mp4" >Augmented and interactive video playback based on global camera pose</a>
-								<p><h5>We propose a video playback system that allows user to expend the field of view to surrounding environments that are not visible in the original video frame, arbitrarily change the viewing angles, and see the superimposed point-of-interest (POIs) data in an augmented reality manner during the video playback. </h5></p>
-							</article>
-
+-->
 						</div>
 
 
