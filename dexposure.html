@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5-ETF Geopolitical Strategy | Portfolio Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            850: '#151f32',
+                            900: '#0f172a',
+                            950: '#020617',
+                        },
+                        accent: {
+                            gold: '#fbbf24',
+                            defence: '#f87171',
+                            tech: '#60a5fa',
+                            banks: '#34d399',
+                            uranium: '#a78bfa',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+        .card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.5);
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .scroller::-webkit-scrollbar {
+            width: 6px;
+        }
+        .scroller::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        .scroller::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 3px;
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-indigo-500 selection:text-white">
+
+    <!-- Navigation / Header -->
+    <nav class="sticky top-0 z-50 bg-slate-900/90 border-b border-slate-800 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center font-bold text-white">P</div>
+                    <span class="font-bold text-xl tracking-tight">Portfolio<span class="text-indigo-400">Alpha</span></span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#dashboard" class="hover:bg-slate-800 px-3 py-2 rounded-md text-sm font-medium transition">Dashboard</a>
+                        <a href="#breakdown" class="hover:bg-slate-800 px-3 py-2 rounded-md text-sm font-medium transition">ETF Analysis</a>
+                        <a href="#scenarios" class="hover:bg-slate-800 px-3 py-2 rounded-md text-sm font-medium transition">Scenarios</a>
+                        <a href="#triggers" class="hover:bg-slate-800 px-3 py-2 rounded-md text-sm font-medium transition">Triggers</a>
+                    </div>
+                </div>
+                <div class="text-xs text-slate-400 font-mono border border-slate-700 rounded px-2 py-1">
+                    Risk: Mod-Aggressive
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+        <!-- Hero Section -->
+        <div class="text-center space-y-4 animate-fade-in">
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">
+                5-ETF <span class="gradient-text">Geopolitical & Cyclical</span> Strategy
+            </h1>
+            <p class="max-w-2xl mx-auto text-slate-400 text-lg">
+                A strategic portfolio balancing structural geopolitical tailwinds (Defence, Uranium) with established value (Banks, Gold) and growth (Nasdaq).
+            </p>
+            <div class="flex justify-center gap-4 text-sm font-mono text-slate-500 mt-4">
+                <span>DATE: JAN 22, 2026</span>
+                <span>•</span>
+                <span>DOMICILE: GERMANY (EUR)</span>
+            </div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div id="dashboard" class="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in" style="animation-delay: 0.1s;">
+            
+            <!-- Allocation Chart -->
+            <div class="card p-6 rounded-2xl col-span-1 lg:col-span-1 flex flex-col items-center justify-center relative">
+                <h3 class="text-lg font-semibold text-slate-200 mb-4 w-full text-left">Core Allocation</h3>
+                <div class="relative h-64 w-full">
+                    <canvas id="allocationChart"></canvas>
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-white">5</div>
+                            <div class="text-xs text-slate-400 uppercase tracking-widest">ETFs</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Metrics -->
+            <div class="card p-6 rounded-2xl col-span-1 lg:col-span-2 grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="col-span-2 md:col-span-4 mb-2">
+                    <h3 class="text-lg font-semibold text-slate-200">Portfolio Metrics (Balanced)</h3>
+                </div>
+                
+                <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                    <div class="text-slate-400 text-xs uppercase tracking-wider mb-1">Expected Return</div>
+                    <div class="text-2xl font-bold text-emerald-400">10-13%<span class="text-xs font-normal text-slate-500 ml-1">p.a.</span></div>
+                    <div class="text-xs text-slate-500 mt-2">Base Case Scenario</div>
+                </div>
+
+                <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                    <div class="text-slate-400 text-xs uppercase tracking-wider mb-1">Volatility</div>
+                    <div class="text-2xl font-bold text-orange-400">~23%<span class="text-xs font-normal text-slate-500 ml-1">ann.</span></div>
+                    <div class="text-xs text-slate-500 mt-2">Moderate-High Risk</div>
+                </div>
+
+                <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                    <div class="text-slate-400 text-xs uppercase tracking-wider mb-1">Max Drawdown</div>
+                    <div class="text-2xl font-bold text-red-400">-28%<span class="text-xs font-normal text-slate-500 ml-1">est.</span></div>
+                    <div class="text-xs text-slate-500 mt-2">90% Confidence</div>
+                </div>
+
+                <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                    <div class="text-slate-400 text-xs uppercase tracking-wider mb-1">Expense Ratio</div>
+                    <div class="text-2xl font-bold text-indigo-400">0.33%<span class="text-xs font-normal text-slate-500 ml-1">TER</span></div>
+                    <div class="text-xs text-slate-500 mt-2">Blended Avg</div>
+                </div>
+
+                <!-- Investment Thesis Text -->
+                <div class="col-span-2 md:col-span-4 mt-2 text-sm text-slate-300 leading-relaxed bg-slate-900/30 p-4 rounded-lg border border-slate-700/30">
+                    <strong class="text-indigo-400">Thesis:</strong> Designed to de-concentrate from US tech (max 18%) while capturing upside from global rearmament and energy transition. Gold (20%) acts as a crisis hedge, providing negative correlation during market shocks.
+                </div>
+            </div>
+        </div>
+
+        <!-- ETF Breakdown Section -->
+        <div id="breakdown" class="space-y-6 animate-fade-in" style="animation-delay: 0.2s;">
+            <div class="flex items-center justify-between">
+                <h2 class="text-2xl font-bold text-white">Portfolio Constituents</h2>
+                <div class="text-sm text-slate-400">Click cards for details</div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4" id="etf-grid">
+                <!-- Cards will be injected by JS -->
+            </div>
+
+            <!-- Detailed View Panel (Hidden by default, shown on click) -->
+            <div id="detail-panel" class="hidden bg-slate-800 border border-slate-700 rounded-2xl p-6 mt-6 shadow-2xl relative overflow-hidden">
+                <button onclick="closeDetail()" class="absolute top-4 right-4 text-slate-400 hover:text-white bg-slate-700/50 rounded-full p-2 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+                <div id="detail-content" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Dynamic Content -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Scenarios & Correlation -->
+        <div id="scenarios" class="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-fade-in" style="animation-delay: 0.3s;">
+            
+            <!-- Scenario Analysis -->
+            <div class="space-y-4">
+                <h2 class="text-2xl font-bold text-white">Scenario Analysis</h2>
+                <div class="card p-6 rounded-2xl space-y-4">
+                    <!-- Bull -->
+                    <div class="group relative overflow-hidden rounded-xl bg-slate-900 border border-emerald-900/30 hover:border-emerald-500/50 transition">
+                        <div class="absolute left-0 top-0 bottom-0 w-1 bg-emerald-500"></div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="font-bold text-emerald-400">Bull Case (Low Tension)</span>
+                                <span class="text-xs bg-emerald-900/50 text-emerald-300 px-2 py-0.5 rounded border border-emerald-800">Prob: 30%</span>
+                            </div>
+                            <div class="flex justify-between items-baseline">
+                                <p class="text-sm text-slate-400">De-escalation, US Soft Landing</p>
+                                <span class="text-xl font-bold text-white">+10.1%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Base -->
+                    <div class="group relative overflow-hidden rounded-xl bg-slate-900 border border-indigo-900/30 hover:border-indigo-500/50 transition ring-1 ring-indigo-500/20">
+                        <div class="absolute left-0 top-0 bottom-0 w-1 bg-indigo-500"></div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="font-bold text-indigo-400">Base Case (Status Quo)</span>
+                                <span class="text-xs bg-indigo-900/50 text-indigo-300 px-2 py-0.5 rounded border border-indigo-800">Prob: 50%</span>
+                            </div>
+                            <div class="flex justify-between items-baseline">
+                                <p class="text-sm text-slate-400">Managed Tension, Rates Cut</p>
+                                <span class="text-xl font-bold text-white">+11.5%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bear -->
+                    <div class="group relative overflow-hidden rounded-xl bg-slate-900 border border-red-900/30 hover:border-red-500/50 transition">
+                        <div class="absolute left-0 top-0 bottom-0 w-1 bg-red-500"></div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="font-bold text-red-400">Bear Case (Conflict/Recession)</span>
+                                <span class="text-xs bg-red-900/50 text-red-300 px-2 py-0.5 rounded border border-red-800">Prob: 20%</span>
+                            </div>
+                            <div class="flex justify-between items-baseline">
+                                <p class="text-sm text-slate-400">Escalation, Market Crash</p>
+                                <span class="text-xl font-bold text-red-400">-7.9%</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-2 italic">Note: Gold (+32%) saves portfolio from deeper crash.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Correlation Matrix -->
+            <div class="space-y-4">
+                <h2 class="text-2xl font-bold text-white">Risk Matrix</h2>
+                <div class="card p-6 rounded-2xl flex flex-col justify-center h-full">
+                    <p class="text-sm text-slate-400 mb-4">Correlation heatmap highlighting diversification benefits vs. concentration risks.</p>
+                    
+                    <div class="grid grid-cols-6 gap-1 text-xs font-mono">
+                        <!-- Headers -->
+                        <div></div>
+                        <div class="text-center text-slate-500">DEF</div>
+                        <div class="text-center text-slate-500">NSDQ</div>
+                        <div class="text-center text-slate-500">GOLD</div>
+                        <div class="text-center text-slate-500">BANK</div>
+                        <div class="text-center text-slate-500">URA</div>
+
+                        <!-- Row 1 Defence -->
+                        <div class="text-right pr-2 text-slate-500 self-center">DEF</div>
+                        <div class="bg-indigo-600/20 text-indigo-300 p-2 text-center rounded">1.0</div>
+                        <div class="bg-indigo-600/40 text-indigo-200 p-2 text-center rounded">0.45</div>
+                        <div class="bg-emerald-500/20 text-emerald-300 p-2 text-center rounded">-0.25</div>
+                        <div class="bg-indigo-600/30 text-indigo-200 p-2 text-center rounded">0.35</div>
+                        <div class="bg-red-500/40 text-red-200 p-2 text-center border border-red-500 rounded font-bold">0.65</div>
+
+                        <!-- Row 2 Nasdaq -->
+                        <div class="text-right pr-2 text-slate-500 self-center">NSDQ</div>
+                        <div class="p-2"></div>
+                        <div class="bg-indigo-600/20 text-indigo-300 p-2 text-center rounded">1.0</div>
+                        <div class="bg-emerald-500/30 text-emerald-300 p-2 text-center rounded">-0.35</div>
+                        <div class="bg-indigo-600/50 text-indigo-200 p-2 text-center rounded">0.50</div>
+                        <div class="bg-indigo-600/30 text-indigo-200 p-2 text-center rounded">0.30</div>
+
+                        <!-- Row 3 Gold -->
+                        <div class="text-right pr-2 text-slate-500 self-center">GOLD</div>
+                        <div class="p-2"></div>
+                        <div class="p-2"></div>
+                        <div class="bg-indigo-600/20 text-indigo-300 p-2 text-center rounded">1.0</div>
+                        <div class="bg-emerald-500/20 text-emerald-300 p-2 text-center rounded">-0.20</div>
+                        <div class="bg-emerald-500/10 text-emerald-300 p-2 text-center rounded">-0.15</div>
+                        
+                        <!-- Row 4 Banks -->
+                        <div class="text-right pr-2 text-slate-500 self-center">BANK</div>
+                        <div class="p-2"></div>
+                        <div class="p-2"></div>
+                        <div class="p-2"></div>
+                        <div class="bg-indigo-600/20 text-indigo-300 p-2 text-center rounded">1.0</div>
+                        <div class="bg-indigo-600/20 text-indigo-200 p-2 text-center rounded">0.20</div>
+
+                         <!-- Row 5 Uranium -->
+                         <div class="text-right pr-2 text-slate-500 self-center">URA</div>
+                         <div class="p-2"></div>
+                         <div class="p-2"></div>
+                         <div class="p-2"></div>
+                         <div class="p-2"></div>
+                         <div class="bg-indigo-600/20 text-indigo-300 p-2 text-center rounded">1.0</div>
+                    </div>
+                    <div class="mt-4 text-xs text-red-300 bg-red-900/20 p-2 rounded border border-red-900/50">
+                        Warning: High Correlation (0.65) between Defence & Uranium. Combined weight: 40%.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Triggers Section -->
+        <div id="triggers" class="space-y-6 animate-fade-in" style="animation-delay: 0.4s;">
+             <h2 class="text-2xl font-bold text-white">Actionable Triggers</h2>
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                 
+                 <div class="card p-5 rounded-xl border-l-4 border-l-red-500">
+                     <div class="flex items-start justify-between">
+                         <h3 class="font-bold text-lg text-white">Peace / De-escalation</h3>
+                         <span class="text-xs bg-slate-700 px-2 py-1 rounded">Immediate</span>
+                     </div>
+                     <p class="text-slate-400 text-sm mt-2">If peace talks emerge, Defence/Uranium could crash -30%.</p>
+                     <div class="mt-4 bg-slate-800/50 p-3 rounded text-sm text-slate-300">
+                         <span class="text-red-400 font-bold">ACTION:</span> Trim Defence to 15%, Reduce Uranium to 5%. Rotate to Nasdaq/Banks.
+                     </div>
+                 </div>
+
+                 <div class="card p-5 rounded-xl border-l-4 border-l-emerald-500">
+                     <div class="flex items-start justify-between">
+                         <h3 class="font-bold text-lg text-white">ECB Rate Cuts (>100bps)</h3>
+                         <span class="text-xs bg-slate-700 px-2 py-1 rounded">Macro</span>
+                     </div>
+                     <p class="text-slate-400 text-sm mt-2">Sharp cuts signal recession; Banks NII suffers.</p>
+                     <div class="mt-4 bg-slate-800/50 p-3 rounded text-sm text-slate-300">
+                         <span class="text-emerald-400 font-bold">ACTION:</span> Reduce Banks to 15%. Increase Gold to 25-28% for safety.
+                     </div>
+                 </div>
+
+                 <div class="card p-5 rounded-xl border-l-4 border-l-orange-500">
+                     <div class="flex items-start justify-between">
+                         <h3 class="font-bold text-lg text-white">Trade War / Tariffs</h3>
+                         <span class="text-xs bg-slate-700 px-2 py-1 rounded">Geopolitics</span>
+                     </div>
+                     <p class="text-slate-400 text-sm mt-2">Trump tariffs >20% on China/EU hit tech hardware.</p>
+                     <div class="mt-4 bg-slate-800/50 p-3 rounded text-sm text-slate-300">
+                         <span class="text-orange-400 font-bold">ACTION:</span> Trim Nasdaq to 12%. Add to Defence/Uranium (Domestic/Security play).
+                     </div>
+                 </div>
+
+                 <div class="card p-5 rounded-xl border-l-4 border-l-purple-500">
+                    <div class="flex items-start justify-between">
+                        <h3 class="font-bold text-lg text-white">Uranium Spike / Crash</h3>
+                        <span class="text-xs bg-slate-700 px-2 py-1 rounded">Volatility</span>
+                    </div>
+                    <p class="text-slate-400 text-sm mt-2">Highly volatile satellite asset.</p>
+                    <div class="mt-4 bg-slate-800/50 p-3 rounded text-sm text-slate-300">
+                        <span class="text-purple-400 font-bold">ACTION:</span> If >$150/lb, trim to 10%. If <$50/lb (and thesis intact), buy dip to 18-20%.
+                    </div>
+                </div>
+
+             </div>
+        </div>
+
+        <footer class="border-t border-slate-800 mt-12 pt-8 text-center text-slate-500 text-sm">
+            <p>© 2026 Portfolio Strategy. Information for educational purposes.</p>
+            <p class="mt-2 text-xs">Based on "Portfolio_Report_5ETF.md" | Volatility and Returns are estimates.</p>
+        </footer>
+
+    </main>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // ETF Data
+        const etfs = [
+            {
+                id: 'defence',
+                name: 'WisdomTree Defence',
+                ticker: 'EUDF',
+                weight: 25,
+                color: '#f87171', // Red
+                role: 'Geopolitical Beneficiary',
+                desc: 'Invests in NATO-aligned defence contractors (Rheinmetall, BAE, Leonardo). Direct beneficiary of 2-3% GDP spending targets.',
+                risk: 'High correlation to conflict intensity. De-escalation risk.',
+                holdings: ['Thales (7%)', 'BAE Systems (6%)', 'Rheinmetall (6%)', 'Saab (5%)']
+            },
+            {
+                id: 'banks',
+                name: 'Amundi Euro Banks',
+                ticker: 'BNKE',
+                weight: 22,
+                color: '#34d399', // Emerald
+                role: 'Yield & Value',
+                desc: 'Captures higher NII from ECB rates (3.5%). Low valuation (P/E ~12x) with solid dividends (4%).',
+                risk: 'ECB Rate cuts > 100bps will compress margins.',
+                holdings: ['UniCredit (10.8%)', 'BBVA (9.4%)', 'BNP Paribas (8.6%)', 'Intesa (8.2%)']
+            },
+            {
+                id: 'gold',
+                name: 'WisdomTree Gold',
+                ticker: 'GBSE',
+                weight: 20,
+                color: '#fbbf24', // Amber
+                role: 'Crisis Hedge',
+                desc: 'Physical Gold (EUR Hedged). Negative correlation to equities (-0.25). Protects against war/recession.',
+                risk: 'Drag in bull markets. No yield.',
+                holdings: ['100% Physical Gold', 'Daily EUR Hedge']
+            },
+            {
+                id: 'nasdaq',
+                name: 'iShares Nasdaq 100',
+                ticker: 'CNDX',
+                weight: 18,
+                color: '#60a5fa', // Blue
+                role: 'Growth Buffer',
+                desc: 'Reduced US exposure (capped at 18%). Captures AI/Tech upside. Unhedged USD exposure.',
+                risk: 'US Tariffs, Valuation compression, Anti-trust.',
+                holdings: ['NVIDIA (9%)', 'Apple (7.2%)', 'Microsoft (6.6%)', 'Amazon (4.9%)']
+            },
+            {
+                id: 'uranium',
+                name: 'VanEck Uranium',
+                ticker: 'URNU',
+                weight: 15,
+                color: '#a78bfa', // Purple
+                role: 'Energy Transition',
+                desc: 'Nuclear renaissance play. AI data centers need baseload power. Supply deficit in yellowcake.',
+                risk: 'Extreme volatility (47%). Regulatory delays.',
+                holdings: ['Cameco (15%)', 'Oklo Inc (11%)', 'NexGen (7.9%)', 'NuScale (7.4%)']
+            }
+        ];
+
+        // Render Cards
+        const grid = document.getElementById('etf-grid');
+        etfs.forEach(etf => {
+            const el = document.createElement('div');
+            el.className = `card p-5 rounded-xl cursor-pointer hover:bg-slate-800 transition group relative overflow-hidden border-t-4`;
+            el.style.borderColor = etf.color;
+            el.onclick = () => showDetail(etf.id);
+            el.innerHTML = `
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-xs font-mono text-slate-400 bg-slate-900/50 px-2 py-1 rounded">${etf.ticker}</span>
+                    <span class="text-xl font-bold" style="color:${etf.color}">${etf.weight}%</span>
+                </div>
+                <h3 class="font-bold text-white mb-1 leading-tight">${etf.name}</h3>
+                <p class="text-xs text-slate-400 mb-4">${etf.role}</p>
+                <div class="text-xs text-slate-500 group-hover:text-indigo-300 transition flex items-center gap-1">
+                    View Details 
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                </div>
+            `;
+            grid.appendChild(el);
+        });
+
+        // Show Details
+        function showDetail(id) {
+            const etf = etfs.find(e => e.id === id);
+            const panel = document.getElementById('detail-panel');
+            const content = document.getElementById('detail-content');
+            
+            panel.classList.remove('hidden');
+            // Scroll to detail slightly
+            panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            content.innerHTML = `
+                <div class="space-y-4">
+                    <div>
+                        <h2 class="text-3xl font-bold text-white mb-2">${etf.name} <span class="text-lg text-slate-500 font-mono font-normal">(${etf.ticker})</span></h2>
+                        <div class="flex gap-2">
+                            <span class="px-2 py-1 rounded bg-slate-700 text-xs text-white">Weight: ${etf.weight}%</span>
+                            <span class="px-2 py-1 rounded bg-slate-700 text-xs text-white">Role: ${etf.role}</span>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed">${etf.desc}</p>
+                    <div class="p-4 bg-red-900/20 border border-red-900/50 rounded-lg">
+                        <strong class="text-red-400 text-sm block mb-1">Key Risk</strong>
+                        <p class="text-red-200 text-sm">${etf.risk}</p>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                     <h3 class="text-sm uppercase text-slate-400 font-bold tracking-wider">Top Holdings / Exposure</h3>
+                     <ul class="space-y-2">
+                        ${etf.holdings.map(h => `
+                            <li class="flex items-center justify-between p-2 bg-slate-900/50 rounded border border-slate-700/50">
+                                <span class="text-slate-200 text-sm">${h}</span>
+                            </li>
+                        `).join('')}
+                     </ul>
+                </div>
+            `;
+        }
+
+        function closeDetail() {
+            document.getElementById('detail-panel').classList.add('hidden');
+        }
+
+        // Initialize Chart.js
+        const ctx = document.getElementById('allocationChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: etfs.map(e => e.name),
+                datasets: [{
+                    data: etfs.map(e => e.weight),
+                    backgroundColor: etfs.map(e => e.color),
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: {
+                    legend: {
+                        display: false // Hide default legend for cleaner look
+                    },
+                    tooltip: {
+                        backgroundColor: '#1e293b',
+                        titleColor: '#fff',
+                        bodyColor: '#cbd5e1',
+                        padding: 12,
+                        cornerRadius: 8,
+                        displayColors: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
